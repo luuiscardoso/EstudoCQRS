@@ -1,6 +1,7 @@
 
 using EstudoCQRS.Application.Commands.CreateCustomer;
 using EstudoCQRS.Application.Queries.GetCustomerById;
+using MediatR;
 
 namespace EstudoCQRS
 {
@@ -16,8 +17,7 @@ namespace EstudoCQRS
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<ICreateCustomerHandler, CreateCustomerHandler>();
-            builder.Services.AddScoped<IGetCustomerByIdHandler, GetCustomerByIdHandler>();
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
             var app = builder.Build();
 
