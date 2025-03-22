@@ -1,6 +1,8 @@
-﻿namespace EstudoCQRS.Application.Queries.GetCustomerById
+﻿using MediatR;
+
+namespace EstudoCQRS.Application.Queries.GetCustomerById
 {
-    public class GetCustomerByIdRequest
+    public class GetCustomerByIdRequest : IRequest<GetCustomerByIdResponse>
     {
         public int Id { get; set; }
         public GetCustomerByIdRequest(int id)

@@ -1,18 +1,22 @@
-﻿namespace EstudoCQRS.Application.Queries.GetCustomerById
+﻿using MediatR;
+
+namespace EstudoCQRS.Application.Queries.GetCustomerById
 {
-    public class GetCustomerByIdHandler : IGetCustomerByIdHandler
+    public class GetCustomerByIdHandler : IRequestHandler<GetCustomerByIdRequest, GetCustomerByIdResponse>
     {
-        public GetCustomerByIdResponse GetCustomerById(GetCustomerByIdRequest request)
+        public Task<GetCustomerByIdResponse> Handle(GetCustomerByIdRequest request, CancellationToken cancellationToken)
         {
             //valida dados
             //chama repositorio
 
-            return new GetCustomerByIdResponse
+            var result = new GetCustomerByIdResponse
             {
-                Id = 1,//retornoRepository.Id
+                Id = request.Id,//retornoRepository.Id
                 Name = "Luis",
                 Email = "luis@gmail.com"
             };
+
+            return Task.FromResult(result);
         }
     }
 }

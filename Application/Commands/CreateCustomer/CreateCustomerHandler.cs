@@ -1,19 +1,23 @@
-﻿namespace EstudoCQRS.Application.Commands.CreateCustomer
+﻿using MediatR;
+
+namespace EstudoCQRS.Application.Commands.CreateCustomer
 {
-    public class CreateCustomerHandler : ICreateCustomerHandler
+    public class CreateCustomerHandler : IRequestHandler<CreateCustomerRequest, CreateCustomerResponse>
     {
-        public CreateCustomerResponse CreateCustomerHandle(CreateCustomerRequest request)
+        public Task<CreateCustomerResponse> Handle(CreateCustomerRequest request, CancellationToken cancellationToken)
         {
             //valida as informações
             //chama o repositorio 
             //repositorio faz a logica
 
-            return new CreateCustomerResponse
+            var result = new CreateCustomerResponse
             {
                 IdGerado = 1,//retornoRepository.Id
                 Name = request.Name,
                 Email = request.Email
             };
+
+            return Task.FromResult(result);
         }
     }
 }

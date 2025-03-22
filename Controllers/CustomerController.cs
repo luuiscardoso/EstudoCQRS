@@ -1,5 +1,6 @@
 ﻿using EstudoCQRS.Application.Commands.CreateCustomer;
 using EstudoCQRS.Application.Queries.GetCustomerById;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,26 +10,24 @@ namespace EstudoCQRS.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICreateCustomerHandler _createCustomerHandler;
-        private readonly IGetCustomerByIdHandler _getCustomerByIdHandler;
+        private readonly IMediator _mediator;
 
-        public CustomerController(ICreateCustomerHandler createCustomerHandler, IGetCustomerByIdHandler getCustomerByIdHandler)
+        public CustomerController(IMediator mediator)
         {
-            _createCustomerHandler = createCustomerHandler;
-            _getCustomerByIdHandler = getCustomerByIdHandler;
+            _mediator = mediator;
         }
 
         [HttpPost]
-        public CreateCustomerResponse CreateCustomer(CreateCustomerRequest command)
+        public Task<CreateCustomerResponse> CreateCustomer(CreateCustomerRequest command)
         {
-            return _createCustomerHandler.CreateCustomerHandle(command);
+            return _mediator.Send(command);
         }
 
         [HttpGet("{id:int}")]
-        public GetCustomerByIdResponse GetCustomer(int id)
+        public Task<GetCustomerByIdResponse> GetCustomer(int id)
         {
             GetCustomerByIdRequest queryCommand = new GetCustomerByIdRequest(id);
-            return _getCustomerByIdHandler.GetCustomerById(queryCommand);
+            return _mediator.Send(queryCommand);
         }
     }
 }
